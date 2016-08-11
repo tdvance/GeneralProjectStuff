@@ -34,3 +34,12 @@
 9.  Use smartgit to stage, commit, and push the files (except those automatically ignored by the .gitignore file) to github.com
 
 10. Go to github.com and find the project and make sure all is ok.
+
+11.  What if you did it in the wrong order? You already have a project and want to put it on github?  There are many solutions.  One that is reasonably robust is the following.
+ a. Back up the project directory somewhere.
+ b. Create a new empty directory "D:\Documents\Repos\MyProject"
+ c. Do steps 2, 3, 4, and 5 above to make it a github repository
+ d. Ensure the IDE/Editor/etc. is not running
+ d. Copy all the files from the original project directory into "D:\Documents\Repos\MyProject"
+ e. Open editor/IDE/etc. to make sure it works.
+ f. If all is ok, do steps 8, 9, and 10.
