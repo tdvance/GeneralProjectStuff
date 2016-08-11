@@ -36,10 +36,10 @@
 10. Go to github.com and find the project and make sure all is ok.
 
 11.  What if you did it in the wrong order? You already have a project and want to put it on github?  There are many solutions.  One that is reasonably robust is the following.
- a. Back up the project directory somewhere.
- b. Create a new empty directory "D:\Documents\Repos\MyProject"
- c. Do steps 2, 3, 4, and 5 above to make it a github repository
- d. Ensure the IDE/Editor/etc. is not running
- d. Copy all the files from the original project directory into "D:\Documents\Repos\MyProject"
- e. Open editor/IDE/etc. to make sure it works.
- f. If all is ok, do steps 8, 9, and 10.
+ 1. Back up the project directory somewhere.
+ 2. Create a new empty directory "D:\Documents\Repos\MyProject"
+ 3. Do steps 2, 3, 4, and 5 above to make it a github repository
+ 4. Ensure the IDE/Editor/etc. is not running
+ 5. Copy all the files from the original project directory into "D:\Documents\Repos\MyProject"
+ 6. Open editor/IDE/etc. to make sure it works.
+ 7. If all is ok, do steps 8, 9, and 10.
