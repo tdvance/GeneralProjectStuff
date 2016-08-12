@@ -14,7 +14,7 @@
 
 * m.put(KeyTag k, Value v): m is modified so that it now contains the association between k and v.  If k had an association with a different Value v', that association no longer holds and is replaced with the new association between k and v.
 
-* m.find(KeyTag l): returns a new MKDict object consisting of those associations in m from KeyTag K to some Value v such that l is a subset of k.
+* m.find(KeyTag l): returns a new MKDict object consisting of those associations in m from KeyTag k to some Value v such that l is a subset of k.
 
 * m.get(KeyTag k): Returns a Value object.  If k is associated with a Value v in m, then v is returned.  Otherwise, raises an exception.
 
