@@ -1,6 +1,6 @@
 #Abstract Data Type MKDict
 
-* Depends on the Dictionary ADT.
+* Depends on the Dictionary ADT and the Set ADT.
 
 * Let KeyTag be an ADT that is a dictionary, except that it is immutable.  It represents a dictionary mapping keys (strings) to tags (also strings).
 
