@@ -4,7 +4,7 @@
 
 * Let KeyTag be an ADT that is a dictionary, except that it is immutable.  It represents a dictionary mapping keys (strings) to tags (also strings).
 
-* The KeyTag type has a notion of subset: If k and l are KeyTag objects, we say k is a subset of l if for every key-value pair (a,v) association in k, there is a key-value pair (a,v) association in l having the same key and value.  That is, whenever k.get(a)=v, then l.get(a)=v.
+* The KeyTag type has a notion of subset: If k and l are KeyTag objects, we say k is a subset of l if for every key-value pair (a,v) association in k, there is a key-value pair (a,v) association in l having the same key and value.  That is, whenever k.get(a) ==v, then l.get(a) == v.
 
 * An MKDict (multi-key dictionary) is a mapping from keytags to values.  Assume Value is the value type.
 
