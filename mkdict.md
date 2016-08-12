@@ -34,15 +34,11 @@ The MKDict ADT satisfies the following axioms:
 
 * If m = new MKDict() then m.count() == 0
 
-* If m.count() == 0, then m.has(k) is False for all k.
-
 * For all KeyTag objects k, m.has(k) returns False if and only if m.get(k) raises an exception.
 
 * If KeyTag l is a subset of KeyTag k and m.has(k) is True,  m.find(l).get(k) = m.get(k)
 
 * If KeyTag l is not a subset of KeyTag k or m.has(k) is False, m.find(l).has(k) is False.
-
-* If KeyTag object k is unequal to KeyTag object k', then the two operations m.put(k,v) and m.put(k',v') result in m being in the same state regardless of what order they are performed.
 
 * After m.put(k,v) is performed, it holds that m.get(k) == v
 
@@ -51,8 +47,6 @@ The MKDict ADT satisfies the following axioms:
 * If m.has(k) is True and m.count() == n, then after m.put(k, v) is performed, m.count() == n.
 
 * If m.get(k) == v, then m.put(k) has no effect on the state of m.
-
-* If KeyTag object k is unequal to KeyTag object k', then the two operations m.remove(k) and m.remove(k'') result in m being in the same state regardless of what order they are performed.
 
 * After m.remove(k) is performed, it holds that m.has(k) is False.
 
