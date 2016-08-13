@@ -1,69 +1,156 @@
 #Abstract Data Type MKDict
 
-* Depends on the Dictionary ADT and the Set ADT.
-
-* Let KeyTag be an ADT that is a dictionary, except that it is immutable.  It represents a dictionary mapping keys (strings) to tags (also strings).
-
-* The KeyTag type has a notion of subset: If k and l are KeyTag objects, we say k is a subset of l if for every key-value pair (a,v) association in k, there is a key-value pair (a,v) association in l having the same key and value.  That is, whenever k.get(a) ==v, then l.get(a) == v.
-
-* An MKDict (multi-key dictionary) is a mapping from keytags to values.  Assume Value is the value type.
-
-* The following operations are supported:
-
-* m = new MKDict(): m is now an empty MKDict object.
-
-* m.put(KeyTag k, Value v): m is modified so that it now contains the association between k and v.  If k had an association with a different Value v', that association no longer holds and is replaced with the new association between k and v.
-
-* m.find(KeyTag l): returns a new MKDict object consisting of those associations in m from KeyTag k to some Value v such that l is a subset of k.
-
-* m.get(KeyTag k): Returns a Value object.  If k is associated with a Value v in m, then v is returned.  Otherwise, raises an exception.
-
-* m.has(KeyTag k): Returns a boolean.  If there is an association from k to some Value v in m, True is returned.  Otherwise, False is returned.
-
-* m.remove(KeyTag k): m is modified so that it no longer has any value associated with KeyTag k.  If k was not already associated with a value in m, m is unchanged.
-
-* m.keytags(): returns a set ADT object (can be a view) whose elements are all KeyTag objects k such that there is a Value object v such that m.get(k) == v.
-
-* m.count(): returns the number of KeyTag-Value associations in m.
-
-## Axioms
-
-The MKDict ADT satisfies the following axioms:
-
-* Only put and remove change the state of m.  All other operations return something about the state of m.  Thus all other operations return the same value on every call until either put or remove is performed, then some operations may return different values.
-
-* If m = new MKDict() then m.count() == 0
-
-* For all KeyTag objects k, m.has(k) returns False if and only if m.get(k) raises an exception.
-
-* If KeyTag l is a subset of KeyTag k and m.has(k) is True,  m.find(l).get(k) = m.get(k)
-
-* If KeyTag l is not a subset of KeyTag k or m.has(k) is False, m.find(l).has(k) is False.
-
-* After m.put(k,v) is performed, it holds that m.get(k) == v
-
-* If m.has(k) is False and m.count() == n, then after m.put(k, v) is performed, m.count() == n + 1.
-
-* If m.has(k) is True and m.count() == n, then after m.put(k, v) is performed, m.count() == n.
-
-* If m.get(k) == v, then m.put(k) has no effect on the state of m.
-
-* After m.remove(k) is performed, it holds that m.has(k) is False.
-
-* If m.has(k) is False, then m.remove(k) has no effect on the state of m.
-
-* If m.has(k) is True and m.count() == n, then after m.remove(k) is performed, m.count() = n - 1.
-
-* If k' != k and m.get(k') == v' and m.put(k, v) is performed, then m.get(k') == v' still.
-
-* If k' != k and m.has(k') is False and m.put(k, v) is performed, then m.has(k') is False still.
-
-* If k' != k and m.get(k') == v' and m.remove(k) is performed, then m.get(k') == v' still.
-
-* If k' != k and m.has(k') is False and m.remove(k) is performed, then m.has(k') is False still.
-
-* The size of the set m.keytags() is equal to m.count().
-
-* For any KeyTag object k, k is in m.keytags() if and only m.has(k) is True.
+A Multi-Key Dictionary (MKDict) is a dictionary ADT with some
+modifictions.  Prerequisite ADTs include the immutable set(ISet),
+dictionary (Dict), and immutable dictionary(IDict).
 
 
+
+## Immutable Set (ISet)
+
+### Type variable K where K is an immutable type.
+
+###operations and informal notes
+
+* A set is a finite collection of elements, where a given element is
+  either in or not in the set (no multiplicity).
+
+* s = new ISet() maps () to ISet s where s is a new, empty set
+
+* s.add(K k) maps (ISet d, K k) to ISet s' where s' contains
+  the elements in s, as well as the element k.
+
+* s.has(K k) is a map from (ISet s, K k) to {true, false} where the
+ value is true if k is an element of s, and false if not.
+
+* s.remove(K k) maps (ISet s, K k) to ISet s' where s' contains the
+  elements of s except for k (if k was an element of s)
+
+* s.count() maps (ISet s) to Integers where the value is the number of
+  distinct elements k such that k is an element of s.
+
+### axioms
+
+* (new Iset()).count() == 0 
+
+* s.add(k).has(k) == True
+
+* s.add(j).has(k) = s.has(k) if k != j
+
+* if s.has(k) is true, then s.add(k) == s
+
+* if s.has(k) is false, then s.add(k).count() == s.count() + 1
+
+* (new ISet()).remove(k) = (new ISet())
+
+* s.add(k).remove(k) = s
+
+* s.add(j).remove(k) = s.remove(k).add(j) if k != j
+
+* if s.has(k) is false, then s.remove(k) == s
+
+* if s.has(k) is true, then s.remove(k).count() == s.count() - 1
+
+
+## Immutable Dictionary (IDict)
+
+### Type variables K, V, where K is an immutable type.
+
+###operations and informal notes
+
+* A dictionary is essentially a set of associations k|->v for k of type
+  K and v of type V.  For any given k, there is at most one v such
+  that k->v in the dictionary.
+
+* d = new IDict() maps () to IDict s where s is a new, empty
+  dictionary
+
+* d.put(K k, V v) maps (IDict d, K k, V v) to IDict d' where d' contains
+  the associations in d, as well as the association k|->v.
+
+* d.get(K k) is a partial map from (IDict d, K k) to the unique V v
+  such that d contains the association k|->v.  If d contains no such
+  association, then the operation fails.
+
+* d.remove(K k) maps (IDict d, K k) to IDict d' where d' contains the
+  associations of d except for any association k|->v if one exists.
+
+* d.keys() maps (IDict d) to ISet s such that k is an element of s if and
+  only if for some v, there is an association k|->v in d.
+
+### axioms
+
+* (new IDict()).set() == new ISet()
+
+* d.put(k,v).get(k) = v
+
+* d.put(j, v).get(k) = d.get(k) if k != j
+
+* d.keys().has(k) is false if and only if d.get(k) fails
+
+* if d.keys().has(k) is true, then d.put(k,v).keys() == d.keys()
+
+* if d.keys().has(k) is false, then d.put(k,v).keys() == d.keys().add(k)
+
+* (new IDict()).remove(k) = (new IDict())
+
+* d.put(k, v).remove(k) = d.remove(k)
+
+* d.put(j, v).remove(k) = d.remove(k).put(j, v) if k != j
+
+* if d.keys().has(k) is false, then d.remove(k).keys() == d.keys()
+
+* if d.keys().has(k) is true, then d.remove(k).keys() == d.keys().remove(k)
+
+## Dictionary
+
+A (mutable) dictionary Dict is similar to an IDict.  Functionally, it
+behaves as folows:
+
+* Setting d <- new Dict() means d behaves as if it is a structure with
+  a single modifiable field d.idict == new IDict()
+
+* d.put(k,v) returns nothing but changes d so that d.idict  <-  (d.idict).put(k,v)
+
+* d.remove(k) returns nothing but changes d so that d.idict  <-  (d.idict).remove(k)
+
+* All other IDict operations are supported by d, but are delegated to d.idict.
+
+## KeyTag
+
+A KeyTag object is an extension of an IDict object.  It has the same
+behavior as an IDict object, but supports some additional methods:
+
+* If t and t' are KeyTag objects, then t.subsetOf(t') is true or
+  false.  It is true if and only if for every k of type K, t.has(k)
+  implies t'.has(k).
+
+* If t and t' are KeyTag objects, then t.update(t') is the unique
+  KeyTag object such that:
+
++ t.update(t').has(k) if and only if either  t.has(k) or t'.has(k)
+
++ If t'.has(k) is false, then t.update(t').get(k) == t.get(k)
+
++ If t'.has(k) is true, then t.update(t').get(k) == t'.get(k)
+ 
+
+## MKDict
+
+An MKDict (Multi Key Dictionary) object is an extension of a Dict
+object.  It has the same behavior as a Dict object, but has one
+restriction and supports some additional methods.
+
+* An MKDict object supports key type only of a KeyTag value.
+  Henceforth, we refer to the key type of MKDict not as K, but as
+  KeyTag<K, T> where K is the key type for the KeyTag and T is the
+  value type (values are called Tags) for the KeyTag.  The value type
+  for the MKDict is still denotead by V.
+
+* If m is an MKDict object, m.find(KeyTag t): returns a new MKDict
+  object consisting of those associations in m KeyTag t' |-> Value v
+  such that t.subsetOf(t') is true.
+
+* If m is an MKDict object, m.remove_all(KeyTag t) behaves as if
+  m.remove(KeyTag t') is called on every KeyTag t' such that m.has(t')
+  is true and t.subsetOf(t') is true.
